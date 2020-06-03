@@ -13,26 +13,26 @@
         <result column="typelist" jdbcType="VARCHAR" property="types" />
     </resultMap>
     <select id="getDefaultMovie" resultMap="BaseResultMap">
-        select * from movies where movieid in
-        (select `movieid` from topdefaultmovies)
+        select * from movie_info where movieid in
+        (select `movieid` from top_rating_movies)
     </select>
     <select id="getDefaultMovieNum" resultType="int">
-        select count(*) from topdefaultmovies
+        select count(*) from recommend_for_movie
     </select>
     <select id="getMovieById" resultMap="BaseResultMap">
-        select * from movies where movieid=#{id}
+        select * from movie_info where movieid=#{id}
     </select>
     <select id="getRecommendMovieById" resultMap="BaseResultMap">
-        select * from movies where movieid in
-        (select `movieid` from alstab where userId=#{id} and rating>5)
+        select * from movie_info where movieid in
+        (select `movieid` from recommend_for_user where userId=#{id} and rating>5)
     </select>
     <select id="getRecommendMovieNumById" resultType="int">
-        select count(*) from alstab where userId=#{id} and rating>5
+        select count(*) from recommend_for_user where userId=#{id} and rating>5
     </select>
     <select id="getMoviesByName" resultMap="BaseResultMap">
-        select * from movies where moviename like concat('%',#{movieName},'%')
+        select * from movie_info where moviename like concat('%',#{movieName},'%')
     </select>
     <select id="getMoviesNumByName" resultType="int">
-        select count(*) from movies where moviename like concat('%',#{movieName},'%')
+        select count(*) from movie_info where moviename like concat('%',#{movieName},'%')
     </select>
 </mapper>

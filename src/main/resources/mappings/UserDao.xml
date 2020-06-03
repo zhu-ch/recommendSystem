@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bit.ss.recommendSystem.modules.DAO.UserDAO">
     <resultMap id="BaseResultMap" type="bit.ss.recommendSystem.modules.entity.UserEntity">
-        <id column="id" jdbcType="VARCHAR" property="id" />
+        <id column="userid" jdbcType="INTEGER" property="id" />
         <result column="username" jdbcType="VARCHAR" property="userName" />
         <result column="password" jdbcType="VARCHAR" property="password" />
         <result column="registertime" jdbcType="TIMESTAMP" property="registerTime" />
@@ -10,23 +10,26 @@
      </resultMap>
 
     <select id="getUserNumberByName" resultType="int">
-        select count(*) from users where `username`=#{userName}
+        select count(*) from sys_user where `username`=#{userName}
     </select>
     <select id="getPasswordByName" resultType="java.lang.String">
-        select password from users where `username`=#{userName}
+        select password from sys_user where `username`=#{userName}
     </select>
     <insert id="insertUserEntry" parameterType="bit.ss.recommendSystem.modules.entity.UserEntity">
-        insert into users
-        (`id`,`username`,`password`,`registertime`,`lastlogintime`)
+        insert into sys_user
+        (`userid`,`username`,`password`,`registertime`,`lastlogintime`)
         values
         (#{id},#{userName},#{password},#{registerTime},#{lastLoginTime})
     </insert>
     <update id="updateLoginTime" parameterType="bit.ss.recommendSystem.modules.entity.UserEntity">
-        update users set `lastlogintime`=#{lastLoginTime} where `id`=#{id}
+        update sys_user set `lastlogintime`=#{lastLoginTime} where `userid`=#{id}
     </update>
     <select id="getUserInfoByUsername"
      parameterType="bit.ss.recommendSystem.modules.entity.UserEntity"
      resultMap="BaseResultMap">
-        select * from users where `username`=#{userName}
+        select * from sys_user where `username`=#{userName}
+    </select>
+    <select id="getAvailableId" resultType="int">
+        select min(userid) from sys_user
     </select>
 </mapper>

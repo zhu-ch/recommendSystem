@@ -16,7 +16,7 @@ public class UserService {
         return userDAO.getUserNumberByName(userName) == 0;
     }
 
-    public String login(UserEntity user){
+    public String login(UserEntity user) {
         if (userDAO.getUserNumberByName(user.getUserName()) == 0)
             return "User not exist";
         if (userDAO.getPasswordByName(user.getUserName()).equals(user.getPassword())) {
@@ -30,7 +30,8 @@ public class UserService {
     public boolean register(UserEntity user) {
         if (!isNameUnused(user.getUserName()))
             return false;
-        user.preInsert();
+        int availableId = userDAO.getAvailableId() - 1;
+        user.preInsert(availableId);
         return userDAO.insertUserEntry(user) == 1;
     }
 }

@@ -10,7 +10,7 @@ public interface MovieDAO {
     List<MovieEntity> getRecommendMovieById(UserEntity user);
     int getDefaultMovieNum();
     int getRecommendMovieNumById(UserEntity user);
-    MovieEntity getMovieById(String id);
+    MovieEntity getMovieById(int id);
     List<MovieEntity> getMoviesByName(MovieEntity movie);
     int getMoviesNumByName(MovieEntity movie);
 }

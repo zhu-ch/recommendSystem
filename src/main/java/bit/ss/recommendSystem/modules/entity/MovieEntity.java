@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class MovieEntity {
-    String id;
+    int id;
     String movieName;
     String showDate;
     String director;
