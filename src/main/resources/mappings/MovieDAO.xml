@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bit.ss.recommendSystem.modules.DAO.MovieDAO">
+    <resultMap id="BaseResultMap" type="bit.ss.recommendSystem.modules.entity.MovieEntity">
+        <id column="movieid" jdbcType="INTEGER" property="id" />
+        <result column="moviename" jdbcType="VARCHAR" property="movieName" />
+        <result column="showyear" jdbcType="DATE" property="showDate" />
+        <result column="director" jdbcType="VARCHAR" property="director" />
+        <result column="leadactors" jdbcType="VARCHAR" property="actors" />
+        <result column="picture" jdbcType="VARCHAR" property="picture" />
+        <result column="averating" jdbcType="DOUBLE" property="rating" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="typelist" jdbcType="VARCHAR" property="types" />
+    </resultMap>
+    <select id="getDefaultMovie" resultMap="BaseResultMap">
+        select * from movies where movieid in
+        (select `movieid` from topdefaultmovies)
+    </select>
+    <select id="getDefaultMovieNum" resultType="int">
+        select count(*) from topdefaultmovies
+    </select>
+    <select id="getMovieById" resultMap="BaseResultMap">
+        select * from movies where movieid=#{id}
+    </select>
+    <select id="getRecommendMovieById" resultMap="BaseResultMap">
+        select * from movies where movieid in
+        (select `movieid` from alstab where userId=#{id} and rating>5)
+    </select>
+    <select id="getRecommendMovieNumById" resultType="int">
+        select count(*) from alstab where userId=#{id} and rating>5
+    </select>
+    <select id="getMoviesByName" resultMap="BaseResultMap">
+        select * from movies where moviename like concat('%',#{movieName},'%')
+    </select>
+    <select id="getMoviesNumByName" resultType="int">
+        select count(*) from movies where moviename like concat('%',#{movieName},'%')
+    </select>
+</mapper>
