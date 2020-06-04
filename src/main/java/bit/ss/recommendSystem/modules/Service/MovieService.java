@@ -17,36 +17,24 @@ public class MovieService {
     @Autowired
     private UserDAO userDAO;
 
-    public List<MovieEntity> getHomepageMovies(UserEntity user) {
-        UserEntity userInfo = userDAO.getUserInfoByUsername(user);
-        if (userInfo.getLastLoginTime().equals(userInfo.getRegisterTime())) {
-            //第一次登录
-            return movieDAO.getDefaultMovie();
-        } else {
-            return movieDAO.getRecommendMovieById(userInfo);
-        }
+    public List<MovieEntity> getHomepageMovies() {
+        return movieDAO.getDefaultMovie();
     }
 
-    public int getHomepageMovieNum(UserEntity user) {
-        UserEntity userInfo = userDAO.getUserInfoByUsername(user);
-        if (userInfo.getLastLoginTime().equals(userInfo.getRegisterTime())) {
-            //第一次登录
-            return movieDAO.getDefaultMovieNum();
-        } else {
-            return movieDAO.getRecommendMovieNumById(userInfo);
-        }
+    public int getHomepageMovieNum() {
+        return movieDAO.getDefaultMovieNum();
     }
 
-    public MovieEntity getMovieDetails(MovieEntity movie,String userName) {
+    public MovieEntity getMovieDetails(MovieEntity movie, String userName) {
         //todo 记录点击？
         return movieDAO.getMovieById(movie.getId());
     }
 
-    public List<MovieEntity> getMoviesByName(MovieEntity movie){
+    public List<MovieEntity> getMoviesByName(MovieEntity movie) {
         return movieDAO.getMoviesByName(movie);
     }
 
-    public int getMoviesNumByName(MovieEntity movie){
+    public int getMoviesNumByName(MovieEntity movie) {
         return movieDAO.getMoviesNumByName(movie);
     }
 

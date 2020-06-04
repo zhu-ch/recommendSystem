@@ -5,7 +5,6 @@ import bit.ss.recommendSystem.common.web.BaseApi;
 import bit.ss.recommendSystem.common.web.MsgType;
 import bit.ss.recommendSystem.modules.Service.MovieService;
 import bit.ss.recommendSystem.modules.entity.MovieEntity;
-import bit.ss.recommendSystem.modules.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +17,11 @@ public class MovieController extends BaseApi {
 
     @RequestMapping(value = "getHomepageMovies", method = RequestMethod.POST)
     @ResponseBody
-    public Object getHomepageMovies(@RequestBody UserEntity user) {
+    public Object getHomepageMovies() {
         try {
             Page<MovieEntity> page = new Page<>();
-            page.setResultList(movieService.getHomepageMovies(user));
-            page.setTotal(movieService.getHomepageMovieNum(user));
+            page.setResultList(movieService.getHomepageMovies());
+            page.setTotal(movieService.getHomepageMovieNum());
             return retMsg.Set(MsgType.SUCCESS, page);
         } catch (Exception e) {
             e.printStackTrace();

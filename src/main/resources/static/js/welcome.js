@@ -1,16 +1,16 @@
 let app = new Vue({
     el: '#app',
     data: {
-        userName: '',
-        password: '',
-        confirmPassword: '',
-        fullScreenLoading: false,
         urls: {
             login: 'http://localhost:8666/api/user/login',
             register: 'http://localhost:8666/api/user/register',
             isNameUnused: 'http://localhost:8666/api/user/isNameUnused',
             test: 'http://localhost:8666/api/movie/getMovieDetails?userName='
-        }
+        },
+        userName: '',
+        password: '',
+        confirmPassword: '',
+        fullScreenLoading: false
     },
     methods: {
         login: function () {
@@ -43,10 +43,9 @@ let app = new Vue({
                             });
                             setSessionStorage('userName', app.userName);
 
-                            //todo 跳转到新页面
-                            // setTimeout(function () {
-                            //     window.open("frame.html", "_self");
-                            // }, 2000);
+                            setTimeout(function () {
+                                window.open("./homepage.html", "_self");
+                            }, 2000);
                         }
                     } else
                         app.$message({
@@ -90,10 +89,9 @@ let app = new Vue({
                             });
                             setSessionStorage('userName', app.userName);
 
-                            //todo 跳转到新页面
-                            // setTimeout(function () {
-                            //     window.open("frame.html", "_self");
-                            // }, 2000);
+                            setTimeout(function () {
+                                window.open("./homepage.html", "_self");
+                            }, 2000);
                         } else
                             app.$message({
                                 message: '注册失败',
@@ -116,8 +114,14 @@ let app = new Vue({
         }
     },
     created: function () {
-        if (getSessionStorage('UserName') !== null) {
-            //已经登录，就不要重复登陆了
+        if (getSessionStorage('userName') !== null) {
+            this.$message({
+                message: "您已登录，将跳转到首页",
+                type: 'error'
+            });
+            setTimeout(function () {
+                window.open("./homepage.html", "_self")
+            }, 2000);
         }
     }
 })

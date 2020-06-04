@@ -17,7 +17,7 @@
         (select `movieid` from top_rating_movies)
     </select>
     <select id="getDefaultMovieNum" resultType="int">
-        select count(*) from recommend_for_movie
+        select count(*) from top_rating_movies
     </select>
     <select id="getMovieById" resultMap="BaseResultMap">
         select * from movie_info where movieid=#{id}

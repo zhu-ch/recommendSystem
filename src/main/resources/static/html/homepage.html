@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>homepage</title>
+    <script src="../utils/templateJS.js"></script>
+    <link rel="stylesheet" href="../utils/templateCSS.css">
+    <link rel="stylesheet" href="../css/homepage.css">
+</head>
+<body>
+<div id="app" v-cloak>
+    <el-container>
+        <el-header height="48px"
+                   style="background: #007cc4;padding-right: 60px;box-shadow: 0 2px 10px 0 rgba(0,0,0,.15);">
+            <el-input v-model="searchMovieName"
+                      placeholder="请输入电影名查询"
+                      suffix-icon="el-icon-search"
+                      @change="search"></el-input>
+            欢迎您，{{page.userName}}
+            <el-button type="danger" size="small" @click="logout">退出</el-button>
+        </el-header>
+        <el-main v-if="page.show">
+            <el-carousel><!--todo 需要调高度、居中-->
+                <el-carousel-item
+                        v-for="(item,index) in movieList"
+                        :key="index">
+                    <el-image :src="item.picture"></el-image>
+                </el-carousel-item>
+            </el-carousel>
+        </el-main>
+    </el-container>
+</div>
+</body>
+<script src="../js/homepage.js"></script>
+</html>
