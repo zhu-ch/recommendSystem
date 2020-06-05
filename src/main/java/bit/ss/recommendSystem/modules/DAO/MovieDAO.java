@@ -7,10 +7,16 @@ import java.util.List;
 
 public interface MovieDAO {
     List<MovieEntity> getDefaultMovie();
-    List<MovieEntity> getRecommendMovieById(UserEntity user);
     int getDefaultMovieNum();
-    int getRecommendMovieNumById(UserEntity user);
-    MovieEntity getMovieById(int id);
+
     List<MovieEntity> getMoviesByName(MovieEntity movie);
     int getMoviesNumByName(MovieEntity movie);
+
+    List<MovieEntity> getRecommendMovieById(UserEntity user);
+    int getRecommendMovieNumById(UserEntity user);
+
+    List<MovieEntity> getRelatedMovies(MovieEntity movie);
+    int getRelatedMoviesNum(MovieEntity movie);
+
+    MovieEntity getMovieById(int id);
 }

@@ -25,7 +25,6 @@
         update sys_user set `lastlogintime`=#{lastLoginTime} where `userid`=#{id}
     </update>
     <select id="getUserInfoByUsername"
-     parameterType="bit.ss.recommendSystem.modules.entity.UserEntity"
      resultMap="BaseResultMap">
         select * from sys_user where `username`=#{userName}
     </select>

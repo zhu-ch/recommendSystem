@@ -26,7 +26,7 @@ public class MovieService {
     }
 
     public MovieEntity getMovieDetails(MovieEntity movie, String userName) {
-        //todo 记录点击？
+        //todo wh:记录点击？
         return movieDAO.getMovieById(movie.getId());
     }
 
@@ -38,4 +38,21 @@ public class MovieService {
         return movieDAO.getMoviesNumByName(movie);
     }
 
+    public List<MovieEntity> getRecommendMovies(String userName){
+        UserEntity userEntity=userDAO.getUserInfoByUsername(userName);
+        return movieDAO.getRecommendMovieById(userEntity);
+    }
+
+    public int getRecommendMoviesNum(String userName){
+        UserEntity userEntity=userDAO.getUserInfoByUsername(userName);
+        return movieDAO.getRecommendMovieNumById(userEntity);
+    }
+
+    public List<MovieEntity> getRelatedMovies(MovieEntity movie){
+        return movieDAO.getRelatedMovies(movie);
+    }
+
+    public int getRelatedMoviesNum(MovieEntity movie){
+        return movieDAO.getRelatedMoviesNum(movie);
+    }
 }

@@ -44,7 +44,7 @@ public class UserController extends BaseApi {
     public Object register(@RequestBody UserEntity user) {
         try {
             if (userService.register(user))
-                return retMsg.Set(MsgType.SUCCESS, true);//todo 注册成功即登录
+                return retMsg.Set(MsgType.SUCCESS, true);
             return retMsg.Set(MsgType.SUCCESS, false);
         } catch (Exception e) {
             e.printStackTrace();

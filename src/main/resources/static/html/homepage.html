@@ -20,7 +20,7 @@
             <el-button type="danger" size="small" @click="logout">退出</el-button>
         </el-header>
         <el-main v-if="page.show">
-            <el-carousel><!--todo 需要调高度、居中-->
+            <el-carousel><!--todo zjm:需要调高度、居中-->
                 <el-carousel-item
                         v-for="(item,index) in movieList"
                         :key="index">

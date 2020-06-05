@@ -24,15 +24,32 @@
     </select>
     <select id="getRecommendMovieById" resultMap="BaseResultMap">
         select * from movie_info where movieid in
-        (select `movieid` from recommend_for_user where userId=#{id} and rating>5)
+        (select t.`movieid` from
+            (select `movieid` from recommend_for_user where userId=#{id} order by `rating` desc limit 3)
+         as t
+        )
     </select>
     <select id="getRecommendMovieNumById" resultType="int">
-        select count(*) from recommend_for_user where userId=#{id} and rating>5
+        select count(*) from recommend_for_user where userId=#{id} order by `rating` desc limit 3
     </select>
     <select id="getMoviesByName" resultMap="BaseResultMap">
-        select * from movie_info where moviename like concat('%',#{movieName},'%')
+        select * from movie_info where moviename
+        like concat('%',#{movieName},'%')
+        limit #{page.pageStart}, #{page.pageSize}
     </select>
     <select id="getMoviesNumByName" resultType="int">
-        select count(*) from movie_info where moviename like concat('%',#{movieName},'%')
+        select count(*) from movie_info
+        where moviename like concat('%',#{movieName},'%')
+        limit #{page.pageStart}, #{page.pageSize}
+    </select>
+    <select id="getRelatedMovies" resultMap="BaseResultMap">
+        select * from movie_info where movieid in
+        (select t.`itemid2` from
+            (select `itemid2` from recommend_for_movie where itemid1=#{id} order by `similar` desc limit 5)
+         as t
+        )
+    </select>
+    <select id="getRelatedMoviesNum" resultType="int">
+        select count(*) from recommend_for_movie where itemid1=#{id} order by `similar` desc limit 5
     </select>
 </mapper>

@@ -43,6 +43,34 @@ public class MovieController extends BaseApi {
         }
     }
 
+    @RequestMapping(value = "getRecommendMovies", method = RequestMethod.POST)
+    @ResponseBody
+    public Object getRecommendMovies(@RequestParam("userName") String userName) {
+        try {
+            Page<MovieEntity> page = new Page<>();
+            page.setResultList(movieService.getRecommendMovies(userName));
+            page.setTotal(movieService.getRecommendMoviesNum(userName));
+            return retMsg.Set(MsgType.SUCCESS, page);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return retMsg.Set(MsgType.ERROR, e.toString());
+        }
+    }
+
+    @RequestMapping(value = "getRelatedMovies", method = RequestMethod.POST)
+    @ResponseBody
+    public Object getRelatedMovies(@RequestBody MovieEntity movie) {
+        try {
+            Page<MovieEntity> page = new Page<>();
+            page.setResultList(movieService.getRelatedMovies(movie));
+            page.setTotal(movieService.getRelatedMoviesNum(movie));
+            return retMsg.Set(MsgType.SUCCESS, page);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return retMsg.Set(MsgType.ERROR, e.toString());
+        }
+    }
+
     @RequestMapping(value = "getMovieDetails", method = RequestMethod.POST)
     @ResponseBody
     public Object getMovieDetails(@RequestParam String userName, @RequestBody MovieEntity movie) {
