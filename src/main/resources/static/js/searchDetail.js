@@ -13,6 +13,9 @@ let app = new Vue({
         },
         table: {
             searchResult: [],
+            type: '',
+            orderBy: 'averating',
+            sortBy: 'desc',
             props: {
                 searchKey: '',
                 pageIndex: 1,
@@ -52,7 +55,10 @@ let app = new Vue({
             let app = this;
             let data = {
                 page: app.table.props,
-                movieName: app.table.props.searchKey
+                movieName: app.table.props.searchKey,
+                types: app.table.type,
+                orderBy: app.table.orderBy,
+                sortBy: app.table.sortBy,
             };
             ajaxPostJSON(
                 this.urls.getMoviesByName,
@@ -126,7 +132,7 @@ let app = new Vue({
         if (userName !== null) {
             let app = this;
             this.page.userName = userName;
-            this.table.props.searchKey = window.location.search.substring(1);
+            this.table.props.searchKey = decodeURI(window.location).split('?')[1];
             this.getSearchResult();
 
             //获取推荐结果

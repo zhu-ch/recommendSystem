@@ -23,6 +23,40 @@
             <el-container>
                 <!--结果-->
                 <el-aside width="60vw">
+                    <el-radio-group v-model="table.type"
+                                    @change="onPageIndexChange(1)">
+                        <el-radio-button label="">全选</el-radio-button>
+                        <el-radio-button label="Action">动作</el-radio-button>
+                        <el-radio-button label="Adventure">冒险</el-radio-button>
+                        <el-radio-button label="Animation">动漫</el-radio-button>
+                        <el-radio-button label="Comedy">喜剧</el-radio-button>
+                        <el-radio-button label="Crime">犯罪</el-radio-button>
+                        <el-radio-button label="Documentary">记录</el-radio-button>
+                        <el-radio-button label="Drama">戏剧</el-radio-button>
+                        <el-radio-button label="Fantasy">幻想</el-radio-button>
+                        <el-radio-button label="Horror">恐怖</el-radio-button>
+                        <el-radio-button label="Music">音乐</el-radio-button>
+                        <el-radio-button label="Mystery">神秘</el-radio-button>
+                        <el-radio-button label="Romance">浪漫</el-radio-button>
+                        <el-radio-button label="Science Fiction">科幻</el-radio-button>
+                        <el-radio-button label="Thriller">惊悚</el-radio-button>
+                        <el-radio-button label="War">战争</el-radio-button>
+                        <el-radio-button label="Western">西方</el-radio-button>
+                        <el-radio-button label="Family">家庭</el-radio-button>
+                    </el-radio-group>
+
+                    <el-radio-group v-model="table.orderBy"
+                                    @change="onPageIndexChange(1)">
+                        <el-radio-button label="averating">评分</el-radio-button>
+                        <el-radio-button label="showyear">上映时间</el-radio-button>
+                    </el-radio-group>
+
+                    <el-radio-group v-model="table.sortBy"
+                                    @change="onPageIndexChange(1)">
+                        <el-radio-button label="desc">降序</el-radio-button>
+                        <el-radio-button label="asc">升序</el-radio-button>
+                    </el-radio-group>
+
                     <!--结果-->
                     <el-row v-for="row in movieArray">
                         <el-col v-for="(item, index) in row" :span="8">
@@ -31,6 +65,7 @@
                                 <div style="padding: 14px;">
                                     <span>{{item.movieName}}</span>
                                     <div class="bottom clearfix">
+                                        {{item.types}}
                                         <el-rate v-model="item.rating"
                                                  disabled
                                                  show-score
@@ -48,6 +83,7 @@
                             layout="prev, pager, next"
                             :total="table.props.total"
                             :page-size="table.props.pageSize"
+                            :current-page="table.props.pageIndex"
                             @current-change="onPageIndexChange">
                     </el-pagination>
                 </el-aside>
@@ -67,6 +103,7 @@
                  @change="onRating"></el-rate>
         <p>电影名{{dialog.movie.movieName}}</p>
         <p>上映时间{{dialog.movie.showDate}}</p>
+        <p>类型{{dialog.movie.types}}</p>
         <p>导演{{dialog.movie.director}}</p>
         <p>演员{{dialog.movie.actors}}</p>
         <p>简介{{dialog.movie.description}}</p>

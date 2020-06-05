@@ -12,9 +12,11 @@ let app = new Vue({
         movieList: []
     },
     methods: {
+        handleImgClick: function (item) {
+            window.open("./searchDetail.html?" + item.movieName, "_self")
+        },
         search: function () {
-            let app = this;
-            window.open("./searchDetail.html?" + app.searchMovieName, "_self")
+            window.open("./searchDetail.html?" + this.searchMovieName, "_self")
         },
         logout: function () {
             delSessionStorage('userName');
@@ -62,7 +64,7 @@ let app = new Vue({
             type: 'error'
         });
         setTimeout(function () {
-            window.open("./welcome.html")
+            window.open("./welcome.html", '_self')
         }, 2000);
     }
 })

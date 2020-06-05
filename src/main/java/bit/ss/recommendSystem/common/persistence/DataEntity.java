@@ -12,6 +12,12 @@ public class DataEntity<T> {
     @Transient
     private Page<T> page; // 分页对象
 
+    @Transient
+    private String orderBy;//排序依据
+
+    @Transient
+    private String sortBy;//排序方式
+
     public DataEntity() {
 
     }
@@ -25,6 +31,19 @@ public class DataEntity<T> {
     }
 
 
+    public String getOrderBy() {
+        return orderBy;
+    }
 
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
+    }
 
+    public String getSortBy() {
+        return sortBy;
+    }
+
+    public void setSortBy(String sortBy) {
+        this.sortBy = sortBy;
+    }
 }

@@ -21,7 +21,6 @@ public class MovieController extends BaseApi {
         try {
             Page<MovieEntity> page = new Page<>();
             page.setResultList(movieService.getHomepageMovies());
-            page.setTotal(movieService.getHomepageMovieNum());
             return retMsg.Set(MsgType.SUCCESS, page);
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,7 +48,6 @@ public class MovieController extends BaseApi {
         try {
             Page<MovieEntity> page = new Page<>();
             page.setResultList(movieService.getRecommendMovies(userName));
-            page.setTotal(movieService.getRecommendMoviesNum(userName));
             return retMsg.Set(MsgType.SUCCESS, page);
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,7 +61,6 @@ public class MovieController extends BaseApi {
         try {
             Page<MovieEntity> page = new Page<>();
             page.setResultList(movieService.getRelatedMovies(movie));
-            page.setTotal(movieService.getRelatedMoviesNum(movie));
             return retMsg.Set(MsgType.SUCCESS, page);
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,6 +68,7 @@ public class MovieController extends BaseApi {
         }
     }
 
+    @Deprecated
     @RequestMapping(value = "getMovieDetails", method = RequestMethod.POST)
     @ResponseBody
     public Object getMovieDetails(@RequestParam String userName, @RequestBody MovieEntity movie) {

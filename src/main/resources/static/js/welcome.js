@@ -7,6 +7,7 @@ let app = new Vue({
             isNameUnused: 'http://localhost:8666/api/user/isNameUnused',
             test: 'http://localhost:8666/api/movie/getMovieDetails?userName='
         },
+        activeName: 'login',
         userName: '',
         password: '',
         confirmPassword: '',
@@ -111,6 +112,11 @@ let app = new Vue({
                     });
                 }
             )
+        },
+        handleTabClick: function () {
+            this.userName = '';
+            this.password = '';
+            this.confirmPassword = '';
         }
     },
     created: function () {

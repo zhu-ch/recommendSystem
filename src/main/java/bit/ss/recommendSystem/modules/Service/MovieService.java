@@ -18,11 +18,7 @@ public class MovieService {
     private UserDAO userDAO;
 
     public List<MovieEntity> getHomepageMovies() {
-        return movieDAO.getDefaultMovie();
-    }
-
-    public int getHomepageMovieNum() {
-        return movieDAO.getDefaultMovieNum();
+        return movieDAO.getDefaultMovie(15);
     }
 
     public MovieEntity getMovieDetails(MovieEntity movie, String userName) {
@@ -38,21 +34,16 @@ public class MovieService {
         return movieDAO.getMoviesNumByName(movie);
     }
 
-    public List<MovieEntity> getRecommendMovies(String userName){
-        UserEntity userEntity=userDAO.getUserInfoByUsername(userName);
-        return movieDAO.getRecommendMovieById(userEntity);
+    public List<MovieEntity> getRecommendMovies(String userName) {
+        UserEntity userEntity = userDAO.getUserInfoByUsername(userName);
+        List<MovieEntity> list = movieDAO.getRecommendMovieById(userEntity);
+        if (list == null || list.size() == 0) {//无论如何都会返回3条记录
+            list = movieDAO.getDefaultMovie(3);
+        }
+        return list;
     }
 
-    public int getRecommendMoviesNum(String userName){
-        UserEntity userEntity=userDAO.getUserInfoByUsername(userName);
-        return movieDAO.getRecommendMovieNumById(userEntity);
-    }
-
-    public List<MovieEntity> getRelatedMovies(MovieEntity movie){
+    public List<MovieEntity> getRelatedMovies(MovieEntity movie) {
         return movieDAO.getRelatedMovies(movie);
-    }
-
-    public int getRelatedMoviesNum(MovieEntity movie){
-        return movieDAO.getRelatedMoviesNum(movie);
     }
 }

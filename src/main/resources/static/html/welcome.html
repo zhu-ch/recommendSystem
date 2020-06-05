@@ -8,15 +8,30 @@
     <link rel="stylesheet" href="../css/welcome.css">
 </head>
 <body>
-<div id="app" v-cloak v-loading="fullScreenLoading">
-    <p>用户名</p>
-    <el-input v-model="userName"></el-input>
-    <p>密码</p>
-    <el-input v-model="password" show-password></el-input>
-    <p>确认密码</p>
-    <el-input v-model="confirmPassword" show-password></el-input>
-    <el-button @click="login">登录</el-button>
-    <el-button @click="register">注册</el-button>
+<div id="app" v-cloak>
+    <el-tabs v-model="activeName"
+             @tab-click="handleTabClick"
+             v-loading="fullScreenLoading">
+        <el-tab-pane label="登录" name="login">
+            <p>用户名</p>
+            <el-input v-model="userName"></el-input>
+            <p>密码</p>
+            <el-input v-model="password" show-password></el-input>
+            <el-button type="primary" @click="login">登录</el-button>
+        </el-tab-pane>
+
+        <el-tab-pane label="注册" name="register">
+            <p>用户名</p>
+            <el-input v-model="userName"></el-input>
+            <p>密码</p>
+            <el-input v-model="password" show-password></el-input>
+            <p>确认密码</p>
+            <el-input v-model="confirmPassword" show-password></el-input>
+            <el-button type="success" @click="register">注册</el-button>
+        </el-tab-pane>
+    </el-tabs>
+
+
 </div>
 </body>
 <script src="../js/welcome.js"></script>

@@ -20,11 +20,19 @@
             <el-button type="danger" size="small" @click="logout">退出</el-button>
         </el-header>
         <el-main v-if="page.show">
-            <el-carousel><!--todo zjm:需要调高度、居中-->
+            <el-carousel height="600px"
+                         indicator-position="none"><!--todo zjm:需要调高度、居中-->
                 <el-carousel-item
                         v-for="(item,index) in movieList"
                         :key="index">
-                    <el-image :src="item.picture"></el-image>
+                    <el-image :src="item.picture"
+                              @click.native="handleImgClick(item)"></el-image>
+                    <el-rate v-model="item.rating"
+                             disabled
+                             show-score
+                             text-color="#ff9900">
+                    </el-rate>
+                    <p>{{item.description}}</p>
                 </el-carousel-item>
             </el-carousel>
         </el-main>
