@@ -40,7 +40,6 @@
     <select id="getMoviesNumByName" resultType="int">
         select count(*) from movie_info
         where moviename like concat('%',#{movieName},'%')
-        limit #{page.pageStart}, #{page.pageSize}
     </select>
     <select id="getRelatedMovies" resultMap="BaseResultMap">
         select * from movie_info where movieid in

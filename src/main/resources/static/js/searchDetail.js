@@ -16,7 +16,7 @@ let app = new Vue({
             props: {
                 searchKey: '',
                 pageIndex: 1,
-                pageSize: 10,
+                pageSize: 9,
                 total: 0
             }
         },
@@ -43,14 +43,48 @@ let app = new Vue({
                 window.open("./welcome.html", "_self")
             }, 2000);
         },
+        onPageIndexChange: function (newIndex) {
+            this.table.searchResult = [];
+            this.table.props.pageIndex = newIndex;
+            this.getSearchResult();
+        },
+        getSearchResult: function () {
+            let app = this;
+            let data = {
+                page: app.table.props,
+                movieName: app.table.props.searchKey
+            };
+            ajaxPostJSON(
+                this.urls.getMoviesByName,
+                data,
+                function (result) {
+                    if (result.code === 'success') {
+                        app.table.props.total = result.data.total;
+                        result.data.resultList.forEach(function (r) {
+                            app.table.searchResult.push(r)
+                        })
+                    } else
+                        app.$message({
+                            message: '服务器错误，原因\n' + result.data,
+                            type: 'error'
+                        });
+                },
+                function () {
+                    app.$message({
+                        message: '获取查询结果失败',
+                        type: 'error'
+                    });
+                }
+            )
+        },
         getRelatedMovies: function (movie) {
+            let app = this;
             //获取相似电影推荐
             ajaxPostJSON(
                 this.urls.getRelatedMovies,
                 {id: movie.id},
                 function (result) {
                     if (result.code === 'success') {
-                        app.table.props.total = result.total;
                         result.data.resultList.forEach(function (r) {
                             app.dialog.relatedMovies.push(r)
                         })
@@ -75,11 +109,15 @@ let app = new Vue({
 
         },
         closeDetailDialog: function () {
-            this.dialog.show = false;
-            this.dialog.movie = {};
-            this.dialog.relatedMovies = [];
+            this.dialog = {
+                show: false,
+                movie: {},
+                rating: 0,
+                relatedMovies: []
+            }
         },
-        onRating:function () {
+        onRating: function () {
+            console.log("打分")
             //todo wh:打分
         }
     },
@@ -88,36 +126,8 @@ let app = new Vue({
         if (userName !== null) {
             let app = this;
             this.page.userName = userName;
-            let queryMovie = window.location.search.substring(1);
-            this.table.props.searchKey = queryMovie;
-            let data = {
-                page: app.table.props,
-                movieName: queryMovie
-            };
-
-            //获取搜索结果
-            ajaxPostJSON(
-                this.urls.getMoviesByName,
-                data,
-                function (result) {
-                    if (result.code === 'success') {
-                        app.table.props.total = result.total;
-                        result.data.resultList.forEach(function (r) {
-                            app.table.searchResult.push(r)
-                        })
-                    } else
-                        app.$message({
-                            message: '服务器错误，原因\n' + result.data,
-                            type: 'error'
-                        });
-                },
-                function () {
-                    app.$message({
-                        message: '获取查询结果失败',
-                        type: 'error'
-                    });
-                }
-            )
+            this.table.props.searchKey = window.location.search.substring(1);
+            this.getSearchResult();
 
             //获取推荐结果
             ajaxPost(
@@ -152,5 +162,20 @@ let app = new Vue({
         setTimeout(function () {
             window.open("./welcome.html", "_self")
         }, 2000);
+    },
+    computed: {
+        movieArray: function () {
+            let ret = [[], [], []];
+            let movies = this.table.searchResult;
+            for (let i = 0; i < movies.length; i++) {
+                if (i <= 2)
+                    ret[0].push(movies[i]);
+                else if (i <= 5)
+                    ret[1].push(movies[i]);
+                else
+                    ret[2].push(movies[i]);
+            }
+            return ret;
+        }
     }
 })

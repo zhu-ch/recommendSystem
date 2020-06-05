@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/searchDetail.css">
 </head>
 <body>
-<div id="app">
+<div id="app" v-cloak>
     <el-container>
         <el-header height="48px"
                    style="background: #007cc4;padding-right: 60px;box-shadow: 0 2px 10px 0 rgba(0,0,0,.15);">
@@ -21,13 +21,57 @@
         </el-header>
         <el-main v-if="page.show">
             <el-container>
-                <el-aside width="60vw">{{table.searchResult}}</el-aside>
-                <el-main>{{recommendMovies}}{{relatedMovies}}</el-main>
+                <!--结果-->
+                <el-aside width="60vw">
+                    <!--结果-->
+                    <el-row v-for="row in movieArray">
+                        <el-col v-for="(item, index) in row" :span="8">
+                            <el-card :body-style="{ padding: '0px' }">
+                                <img :src="item.picture" class="image">
+                                <div style="padding: 14px;">
+                                    <span>{{item.movieName}}</span>
+                                    <div class="bottom clearfix">
+                                        <el-rate v-model="item.rating"
+                                                 disabled
+                                                 show-score
+                                                 text-color="#ff9900">
+                                        </el-rate>
+                                        <el-button type="text" class="button" @click="openDetailDialog(item)">查看详情
+                                        </el-button>
+                                    </div>
+                                </div>
+                            </el-card>
+                        </el-col>
+                    </el-row>
+                    <!--分页-->
+                    <el-pagination
+                            layout="prev, pager, next"
+                            :total="table.props.total"
+                            :page-size="table.props.pageSize"
+                            @current-change="onPageIndexChange">
+                    </el-pagination>
+                </el-aside>
+
+                <!--推荐-->
+                <el-main>{{recommendMovies}}</el-main>
             </el-container>
         </el-main>
     </el-container>
-    <el-dialog>
 
+    <!--电影详情-->
+    <el-dialog :title="dialog.movie.movieName+' - 电影详情'"
+               :visible="dialog.show"
+               :before-close="closeDetailDialog">
+        <img :src="dialog.movie.picture">
+        <el-rate v-model="dialog.rating"
+                 @change="onRating"></el-rate>
+        <p>电影名{{dialog.movie.movieName}}</p>
+        <p>上映时间{{dialog.movie.showDate}}</p>
+        <p>导演{{dialog.movie.director}}</p>
+        <p>演员{{dialog.movie.actors}}</p>
+        <p>简介{{dialog.movie.description}}</p>
+        <br><br>
+        相关电影{{dialog.relatedMovies}}
     </el-dialog>
 </div>
 </body>

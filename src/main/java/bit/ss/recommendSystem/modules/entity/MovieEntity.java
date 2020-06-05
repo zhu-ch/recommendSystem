@@ -11,7 +11,7 @@ public class MovieEntity extends DataEntity<MovieEntity> {
     String director;
     String actors;
     String picture;
-    Integer rating;
+    float rating;
     String description;
     String types;
 }
