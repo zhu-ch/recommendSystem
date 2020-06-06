@@ -37,5 +37,11 @@
 .demo-table-expand .el-form-item {
     margin-right: 0;
     margin-bottom: 0;
-    width: 50%;
+    /*width: 50%;*/
+}
+.el-dialog{
+    background-color: #333333;
+}
+.el-dialog p{
+    color: #FFFFFF;
 }

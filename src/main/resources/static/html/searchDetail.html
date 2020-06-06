@@ -16,7 +16,7 @@
                       @click.native="clickHeadIcon()"
                       id="HeadIcon"
                       style="height: 35px;width: 45px;margin-top: 6px;margin-right: 6em;cursor: pointer;"></el-image>
-            <el-input v-model="searchMovieName"
+            <el-input v-model="table.props.searchKey"
                       style="width: 50%;position: absolute;top: 3px"
                       placeholder="请输入电影名查询"
                       suffix-icon="el-icon-search"
@@ -30,6 +30,7 @@
             <el-container>
                 <!--结果-->
                 <el-aside width="60vw">
+                    <!--类别-->
                     <el-radio-group v-model="table.type"
                                     @change="onPageIndexChange(1)"
                                     style="display: block;">
@@ -53,7 +54,7 @@
                         <el-radio-button label="Western">西方</el-radio-button>
                         <el-radio-button label="Family">家庭</el-radio-button>
                     </el-radio-group>
-
+                    <!--排序-->
                     <div style="margin-top: 10px;margin-bottom: 10px">
                         <el-radio-group v-model="table.orderBy"
                                         @change="onPageIndexChange(1)"
@@ -108,7 +109,7 @@
                             style="width: 100%">
                         <el-table-column type="expand">
                             <template slot-scope="props">
-                                <el-form label-position="left" inline class="demo-table-expand">
+                                <el-form label-position="left" class="demo-table-expand">
                                     <el-form-item label="电影名称">
                                         <p>{{ props.row.movieName }}</p>
                                     </el-form-item>
@@ -126,7 +127,7 @@
                                                  disabled
                                                  show-score
                                                  text-color="#ff9900">
-<!--                                        <p>{{ props.row.rating }}</p>-->
+                                            <!--                                        <p>{{ props.row.rating }}</p>-->
                                     </el-form-item>
                                     <el-form-item label="描述">
                                         <p>{{ props.row.description }}</p>
@@ -160,16 +161,40 @@
                :visible="dialog.show"
                :before-close="closeDetailDialog">
         <img :src="dialog.movie.picture">
+        <p>电影名：{{dialog.movie.movieName}}</p>
+        <p>上映时间：{{dialog.movie.showDate}}</p>
+        <p>类型：{{dialog.movie.types}}</p>
+        <p>导演：{{dialog.movie.director}}</p>
+        <p>演员：{{dialog.movie.actors}}</p>
+        <p style="display: inline;float: left">评分：</p>
         <el-rate v-model="dialog.rating"
-                 @change="onRating"></el-rate>
-        <p>电影名{{dialog.movie.movieName}}</p>
-        <p>上映时间{{dialog.movie.showDate}}</p>
-        <p>类型{{dialog.movie.types}}</p>
-        <p>导演{{dialog.movie.director}}</p>
-        <p>演员{{dialog.movie.actors}}</p>
-        <p>简介{{dialog.movie.description}}</p>
+                 @change="onRating"
+                 show-score
+                 style="display: inline;float: left"></el-rate>
         <br><br>
-        相关电影{{dialog.relatedMovies}}
+        <p>简介：{{dialog.movie.description}}</p>
+        <br><br>
+        <!--相关电影-->
+        <el-row>
+            <el-col v-for="(item, index) in dialog.relatedMovies" :span="8">
+                <el-card :body-style="{ padding: '0px' }">
+                    <img :src="item.picture" class="image">
+                    <div style="padding: 14px;">
+                        <span>{{item.movieName}}</span>
+                        <div class="bottom clearfix">
+                            {{item.types}}
+                            <el-rate v-model="item.rating"
+                                     disabled
+                                     show-score
+                                     text-color="#ff9900">
+                            </el-rate>
+                            <el-button type="text" class="button" @click="handleImgClick(item)">查看详情
+                            </el-button>
+                        </div>
+                    </div>
+                </el-card>
+            </el-col>
+        </el-row>
     </el-dialog>
 </div>
 </body>

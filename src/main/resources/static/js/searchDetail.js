@@ -35,6 +35,9 @@ let app = new Vue({
         clickHeadIcon:function(){
             window.open("./homepage.html", "_self")
         },
+        handleImgClick: function (item) {
+            window.open("./searchDetail.html?" + item.movieName, "_self")
+        },
         search: function () {
             let app = this;
             window.open("./searchDetail.html?" + app.table.props.searchKey)
