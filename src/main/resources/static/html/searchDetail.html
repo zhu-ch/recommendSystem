@@ -12,6 +12,7 @@
         }
         aside::-webkit-scrollbar { width: 0 !important }
         .el-main::-webkit-scrollbar { width: 0 !important}
+        .el-table::-webkit-scrollbar { width: 0 !important}
         div::-webkit-scrollbar-track {
             -webkit-box-shadow:rgba(0,0,0,0.3);
             border-radius:10px;
@@ -61,11 +62,14 @@
         .el-table, .el-table__expanded-cell{
             background-color: transparent !important;
         }
+        .el-table__body td:hover{
+            background-color: transparent !important;
+        }
         .demo-table-expand label{
             color: white;
         }
         .el-table--enable-row-hover .el-table__body tr:hover>td{
-            background-color: red !important;
+            background-color: rgba(255,0,0,0.5) !important;
         }
 
         .el-radio__input.is-checked .el-radio__inner{
@@ -122,12 +126,12 @@
     <el-container>
         <el-header
                 style="height:46px;background: #000000;box-shadow: 0 2px 10px 0 rgba(0,0,0,.15);display: inline;float: left;">
-            <el-image src="http://n1.itc.cn/img8/wb/recom/2016/08/05/147036120033393725.JPEG"
+            <el-image src="https://i.ibb.co/QDWWLXP/image.png"
                       @click.native="clickHeadIcon()"
                       id="HeadIcon"
-                      style="height: 35px;width: 45px;margin-top: 6px;margin-right: 6em;cursor: pointer;"></el-image>
+                      style="height: 45px;width: 45px;margin-top: 6px;margin-right: 6em;cursor: pointer;"></el-image>
             <el-input v-model="table.props.searchKey"
-                      style="width: 50%;position: absolute;top: 3px"
+                      style="width: 40%;position: absolute;left: 16%;margin-top: 5px"
                       placeholder="请输入电影名查询"
                       suffix-icon="el-icon-search"
                       @change="getSearchResult"></el-input>
@@ -230,7 +234,7 @@
                     <template>
                         <el-table
                                 :data="topMovies"
-                                style="width: 100%">
+                                style="width: 100%;overflow: scroll">
                             <el-table-column type="expand">
                                 <template slot-scope="props">
                                     <el-form label-position="left" class="demo-table-expand">
@@ -278,7 +282,7 @@
                     <template>
                         <el-table
                                 :data="recommendMovies"
-                                style="width: 100%">
+                                style="width: 100%;overflow: scroll">
                             <el-table-column type="expand">
                                 <template slot-scope="props">
                                     <el-form label-position="left" class="demo-table-expand">
