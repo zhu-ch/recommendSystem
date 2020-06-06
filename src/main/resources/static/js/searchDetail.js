@@ -172,7 +172,6 @@ let app = new Vue({
                 null,
                 function (result) {
                     if (result.code === 'success') {
-                        console.log(result.data.resultList)
                         result.data.resultList.forEach(function (r) {
                             app.topMovies.push(r)
                         })

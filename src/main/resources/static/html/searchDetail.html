@@ -10,42 +10,56 @@
         .el-radio-button__orig-radio:checked + .el-radio-button__inner el-radio-button {
             background-color: black;
         }
-        aside::-webkit-scrollbar { width: 0 !important }
-        .el-main::-webkit-scrollbar { width: 0 !important}
+
+        aside::-webkit-scrollbar {
+            width: 0 !important
+        }
+
+        .el-main::-webkit-scrollbar {
+            width: 0 !important
+        }
+
         .el-table::-webkit-scrollbar { width: 0 !important}
         div::-webkit-scrollbar-track {
-            -webkit-box-shadow:rgba(0,0,0,0.3);
-            border-radius:10px;
+            -webkit-box-shadow: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
         }
+
         div::-webkit-scrollbar-thumb {
-            border-radius:10px;
-            background:rgba(255,0,0,0.4);
-            -webkit-box-shadow:rgba(0,0,0,0.5);
+            border-radius: 10px;
+            background: rgba(255, 0, 0, 0.4);
+            -webkit-box-shadow: rgba(0, 0, 0, 0.5);
         }
+
         div::-webkit-scrollbar-thumb:window-inactive {
-            background:rgba(255,0,0,0.4);
+            background: rgba(255, 0, 0, 0.4);
         }
-        .el-table{
+
+        .el-table {
             /* 表格字体颜色 */
-            color:white;
-             border: none;
+            color: white;
+            border: none;
             height: 500px;
         }
+
         /* 表格内背景颜色 */
-        .el-table th, .el-table tr,.el-table td{
+        .el-table th, .el-table tr, .el-table td {
             border: 0;
             background-color: transparent;
         }
+
         /* 双数行背景颜色 */
         .el-table--striped .el-table__body tr.el-table__row--striped td {
 
-            background-color:#fff;
+            background-color: #fff;
             background-color: rgba(148, 144, 144, 0.3)
         }
+
         /* 使表格背景透明 */
         .el-table th, .el-table tr {
             background-color: transparent;
         }
+
         /* 删除表格下横线 */
         .el-table::before {
             left: 0;
@@ -53,67 +67,82 @@
             width: 100%;
             height: 0px;
         }
+
         /* 表格表头字体颜色 */
         .el-table thead {
             color: white;
             font-weight: 500;
-            background-color:transparent;
+            background-color: transparent;
         }
-        .el-table, .el-table__expanded-cell{
+
+        .el-table, .el-table__expanded-cell {
             background-color: transparent !important;
         }
         .el-table__body td:hover{
             background-color: transparent !important;
         }
-        .demo-table-expand label{
+
+        .demo-table-expand label {
             color: white;
         }
-        .el-table--enable-row-hover .el-table__body tr:hover>td{
+
+        .el-table--enable-row-hover .el-table__body tr:hover > td {
             background-color: rgba(255,0,0,0.5) !important;
         }
 
-        .el-radio__input.is-checked .el-radio__inner{
+        .el-radio__input.is-checked .el-radio__inner {
             border-color: #bf0000;
             background-color: red;
         }
-        .el-radio__input.is-checked+.el-radio__label{
+
+        .el-radio__input.is-checked + .el-radio__label {
             color: red;
         }
-        .el-pager li.active{
+
+        .el-pager li.active {
             color: red;
         }
-        .el-pager li:hover{
+
+        .el-pager li:hover {
             color: red !important;
         }
-        .el-pager li{
+
+        .el-pager li {
             background-color: transparent !important;
         }
 
-        .el-pagination button:disabled{
+        .el-pagination button:disabled {
             background-color: transparent !important;
         }
-        .el-pagination button{
+
+        .el-pagination button {
             background-color: transparent !important;
         }
-        .el-pagination button:hover{
-            color:red !important;
+
+        .el-pagination button:hover {
+            color: red !important;
         }
-        .el-radio-button__orig-radio:checked+.el-radio-button__inner{
+
+        .el-radio-button__orig-radio:checked + .el-radio-button__inner {
             background-color: red;
             border-color: red;
         }
-        .el-radio-button__inner{
+
+        .el-radio-button__inner {
             background-color: transparent;
             color: white;
         }
-        .el-radio-button__inner:hover{
+
+        .el-radio-button__inner:hover {
 
             color: red;
         }
-        .el-dialog__title{
+
+        .el-dialog__title {
             color: white;
         }
-        .el-card{
+
+        .el-card {
             background-color: transparent;
             color: white;
             padding: 10px;
@@ -194,8 +223,7 @@
                             <el-col v-for="(item, index) in row" :span="6">
                                 <el-card :body-style="{ padding: '5px' }"
                                          style="padding: 20px 50px 0 0;margin:20px 0 0 0 ;
-                                                background-color: black;border: none;
-                                                cursor: pointer"
+                                                background-color: black;border: none"
                                          @click.native="openDetailDialog(item)">
                                     <img :src="item.picture" class="image" style="width: 247.7px;height: 371.6px">
                                     <div style="padding: 14px;">
@@ -228,7 +256,7 @@
                 </el-aside>
 
                 <!--推荐-->
-                <el-main >
+                <el-main>
                     <!--热门推荐-->
                     <h1 style="color: white;text-align: center">热门排行</h1>
                     <template>
@@ -338,13 +366,13 @@
             <el-col :span="6">
                 <img :src="dialog.movie.picture">
             </el-col>
-            <el-col :span="12" style="margin-left: 200px">
+            <el-col :span="8" :offset="6">
                 <p>电影名：{{dialog.movie.movieName}}</p>
                 <p>上映时间：{{dialog.movie.showDate}}</p>
                 <p>类型：{{dialog.movie.types}}</p>
                 <p>导演：{{dialog.movie.director}}</p>
                 <p>演员：{{dialog.movie.actors}}</p>
-                <p style="display: inline;float: left">评分：</p>
+                <p style="display: inline;float: left">我来评分：</p>
                 <el-rate v-model="dialog.rating"
                          @change="onRating"
                          show-score
@@ -356,24 +384,24 @@
         </el-row>
 
         <!--相关电影-->
-        <div style="width: 100%;margin-top: 10px;margin-bottom: 30px;
-							white-space: nowrap;overflow-x: auto;-webkit-overflow-scrolling:touch;">
-            <h1 style="color: white">喜欢这部电影的人同时也喜欢这些电影~</h1>
+        <h1 style="color: white">喜欢这部电影的人同时也喜欢这些电影</h1>
+        <div id="related"
+             style="width: 100%;margin-top: 10px;margin-bottom: 30px;
+					white-space: nowrap;overflow-x: auto;-webkit-overflow-scrolling:touch;">
             <el-card :body-style="{ padding: '10px' }"
-                     v-for="(item, index) in dialog.relatedMovies">
+                     v-for="(item, index) in dialog.relatedMovies"
+            @click.native="handleImgClick(item)">
                 <img :src="item.picture" class="image">
                 <div style="padding: 14px;">
-                    <span>{{item.movieName}}</span>
-                    <div class="bottom clearfix">
-                        {{item.types}}
-                        <el-rate v-model="item.rating"
-                                 disabled
-                                 show-score
-                                 text-color="#ff9900" style="margin-top: 20px">
-                        </el-rate>
-                        <el-button type="text" class="button" @click="handleImgClick(item)">搜索
-                        </el-button>
-                    </div>
+                    <p>{{item.movieName}}</p>
+                    <p>{{item.types}}</p>
+                    <el-rate v-model="item.rating"
+                             disabled
+                             show-score
+                             text-color="#ff9900" style="margin-top: 20px">
+                    </el-rate>
+<!--                    <el-button type="text" class="button" @click="handleImgClick(item)">搜索-->
+<!--                    </el-button>-->
                 </div>
             </el-card>
         </div>
