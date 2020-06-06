@@ -213,6 +213,9 @@ let app = new Vue({
                     ret[2].push(movies[i]);
             }
             return ret;
+        },
+        showRelated: function () {
+            return this.dialog.relatedMovies.length > 0;
         }
     }
 })

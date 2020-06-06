@@ -19,7 +19,10 @@
             width: 0 !important
         }
 
-        .el-table::-webkit-scrollbar { width: 0 !important}
+        .el-table::-webkit-scrollbar {
+            width: 0 !important
+        }
+
         div::-webkit-scrollbar-track {
             -webkit-box-shadow: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
@@ -78,7 +81,8 @@
         .el-table, .el-table__expanded-cell {
             background-color: transparent !important;
         }
-        .el-table__body td:hover{
+
+        .el-table__body td:hover {
             background-color: transparent !important;
         }
 
@@ -87,7 +91,7 @@
         }
 
         .el-table--enable-row-hover .el-table__body tr:hover > td {
-            background-color: rgba(255,0,0,0.5) !important;
+            background-color: rgba(255, 0, 0, 0.5) !important;
         }
 
         .el-radio__input.is-checked .el-radio__inner {
@@ -384,13 +388,15 @@
         </el-row>
 
         <!--相关电影-->
-        <h1 style="color: white">喜欢这部电影的人同时也喜欢这些电影</h1>
+        <h1 style="color: white"
+            v-if="showRelated">喜欢这部电影的人同时也喜欢这些电影</h1>
         <div id="related"
              style="width: 100%;margin-top: 10px;margin-bottom: 30px;
-					white-space: nowrap;overflow-x: auto;-webkit-overflow-scrolling:touch;">
+					white-space: nowrap;overflow-x: auto;-webkit-overflow-scrolling:touch;"
+             v-if="showRelated">
             <el-card :body-style="{ padding: '10px' }"
                      v-for="(item, index) in dialog.relatedMovies"
-            @click.native="handleImgClick(item)">
+                     @click.native="handleImgClick(item)">
                 <img :src="item.picture" class="image">
                 <div style="padding: 14px;">
                     <p>{{item.movieName}}</p>
@@ -400,8 +406,8 @@
                              show-score
                              text-color="#ff9900" style="margin-top: 20px">
                     </el-rate>
-<!--                    <el-button type="text" class="button" @click="handleImgClick(item)">搜索-->
-<!--                    </el-button>-->
+                    <!--                    <el-button type="text" class="button" @click="handleImgClick(item)">搜索-->
+                    <!--                    </el-button>-->
                 </div>
             </el-card>
         </div>
