@@ -8,5 +8,5 @@ public interface UserDAO {
     int getAvailableId();
     int insertUserEntry(UserEntity user);
     int updateLoginTime(UserEntity user);
-    UserEntity getUserInfoByUsername(UserEntity user);
+    UserEntity getUserInfoByUsername(String userName);
 }

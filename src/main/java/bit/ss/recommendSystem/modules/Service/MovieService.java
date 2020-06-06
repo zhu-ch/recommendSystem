@@ -17,37 +17,33 @@ public class MovieService {
     @Autowired
     private UserDAO userDAO;
 
-    public List<MovieEntity> getHomepageMovies(UserEntity user) {
-        UserEntity userInfo = userDAO.getUserInfoByUsername(user);
-        if (userInfo.getLastLoginTime().equals(userInfo.getRegisterTime())) {
-            //第一次登录
-            return movieDAO.getDefaultMovie();
-        } else {
-            return movieDAO.getRecommendMovieById(userInfo);
-        }
+    public List<MovieEntity> getHomepageMovies() {
+        return movieDAO.getDefaultMovie(15);
     }
 
-    public int getHomepageMovieNum(UserEntity user) {
-        UserEntity userInfo = userDAO.getUserInfoByUsername(user);
-        if (userInfo.getLastLoginTime().equals(userInfo.getRegisterTime())) {
-            //第一次登录
-            return movieDAO.getDefaultMovieNum();
-        } else {
-            return movieDAO.getRecommendMovieNumById(userInfo);
-        }
-    }
-
-    public MovieEntity getMovieDetails(MovieEntity movie,String userName) {
-        //todo 记录点击？
+    public MovieEntity getMovieDetails(MovieEntity movie, String userName) {
+        //todo wh:记录点击？
         return movieDAO.getMovieById(movie.getId());
     }
 
-    public List<MovieEntity> getMoviesByName(MovieEntity movie){
+    public List<MovieEntity> getMoviesByName(MovieEntity movie) {
         return movieDAO.getMoviesByName(movie);
     }
 
-    public int getMoviesNumByName(MovieEntity movie){
+    public int getMoviesNumByName(MovieEntity movie) {
         return movieDAO.getMoviesNumByName(movie);
     }
 
+    public List<MovieEntity> getRecommendMovies(String userName) {
+        UserEntity userEntity = userDAO.getUserInfoByUsername(userName);
+        List<MovieEntity> list = movieDAO.getRecommendMovieById(userEntity);
+        if (list == null || list.size() == 0) {//无论如何都会返回3条记录
+            list = movieDAO.getDefaultMovie(3);
+        }
+        return list;
+    }
+
+    public List<MovieEntity> getRelatedMovies(MovieEntity movie) {
+        return movieDAO.getRelatedMovies(movie);
+    }
 }
