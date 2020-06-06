@@ -32,6 +32,9 @@ let app = new Vue({
         recommendMovies: []
     },
     methods: {
+        clickHeadIcon:function(){
+            window.open("./homepage.html", "_self")
+        },
         search: function () {
             let app = this;
             window.open("./searchDetail.html?" + app.table.props.searchKey)
