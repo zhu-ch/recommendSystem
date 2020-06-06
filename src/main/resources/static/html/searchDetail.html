@@ -10,21 +10,30 @@
 <body>
 <div id="app" v-cloak>
     <el-container>
-        <el-header height="48px"
-                   style="background: #007cc4;padding-right: 60px;box-shadow: 0 2px 10px 0 rgba(0,0,0,.15);">
+        <el-header
+                style="height:46px;background: #007cc4;box-shadow: 0 2px 10px 0 rgba(0,0,0,.15);display: inline;float: left;">
+            <el-image src="http://n1.itc.cn/img8/wb/recom/2016/08/05/147036120033393725.JPEG"
+                      @click.native="clickHeadIcon()"
+                      id="HeadIcon"
+                      style="height: 35px;width: 45px;margin-top: 6px;margin-right: 6em;cursor: pointer;"></el-image>
             <el-input v-model="table.props.searchKey"
+                      style="width: 50%;position: absolute;top: 3px"
                       placeholder="请输入电影名查询"
                       suffix-icon="el-icon-search"
                       @change="search"></el-input>
-            欢迎您，{{page.userName}}
-            <el-button type="danger" size="small" @click="logout">退出</el-button>
+            <div style="display: inline;position: absolute;top: 8px;right: 10px">
+                <p style="color: #FFFFFF;display: inline;margin-right: 5px">欢迎您，{{page.userName}}</p>
+                <el-button type="danger" size="small" @click="logout">退出</el-button>
+            </div>
         </el-header>
         <el-main v-if="page.show">
             <el-container>
                 <!--结果-->
                 <el-aside width="60vw">
+                    <!--类别-->
                     <el-radio-group v-model="table.type"
-                                    @change="onPageIndexChange(1)">
+                                    @change="onPageIndexChange(1)"
+                                    style="display: block;">
                         <el-radio-button label="">全选</el-radio-button>
                         <el-radio-button label="Action">动作</el-radio-button>
                         <el-radio-button label="Adventure">冒险</el-radio-button>
@@ -34,6 +43,7 @@
                         <el-radio-button label="Documentary">记录</el-radio-button>
                         <el-radio-button label="Drama">戏剧</el-radio-button>
                         <el-radio-button label="Fantasy">幻想</el-radio-button>
+                        <p></p>
                         <el-radio-button label="Horror">恐怖</el-radio-button>
                         <el-radio-button label="Music">音乐</el-radio-button>
                         <el-radio-button label="Mystery">神秘</el-radio-button>
@@ -44,18 +54,21 @@
                         <el-radio-button label="Western">西方</el-radio-button>
                         <el-radio-button label="Family">家庭</el-radio-button>
                     </el-radio-group>
+                    <!--排序-->
+                    <div style="margin-top: 10px;margin-bottom: 10px">
+                        <el-radio-group v-model="table.orderBy"
+                                        @change="onPageIndexChange(1)"
+                                        style="margin-right: 30px">
+                            <el-radio label="averating">按评分排序</el-radio>
+                            <el-radio label="showyear">按时间排序</el-radio>
+                        </el-radio-group>
 
-                    <el-radio-group v-model="table.orderBy"
-                                    @change="onPageIndexChange(1)">
-                        <el-radio-button label="averating">评分</el-radio-button>
-                        <el-radio-button label="showyear">上映时间</el-radio-button>
-                    </el-radio-group>
-
-                    <el-radio-group v-model="table.sortBy"
-                                    @change="onPageIndexChange(1)">
-                        <el-radio-button label="desc">降序</el-radio-button>
-                        <el-radio-button label="asc">升序</el-radio-button>
-                    </el-radio-group>
+                        <el-radio-group v-model="table.sortBy"
+                                        @change="onPageIndexChange(1)">
+                            <el-radio label="desc">降序</el-radio>
+                            <el-radio label="asc">升序</el-radio>
+                        </el-radio-group>
+                    </div>
 
                     <!--结果-->
                     <el-row v-for="row in movieArray">
@@ -89,7 +102,57 @@
                 </el-aside>
 
                 <!--推荐-->
-                <el-main>{{recommendMovies}}</el-main>
+                <!--                <el-main>{{recommendMovies}}</el-main>-->
+                <template>
+                    <el-table
+                            :data="recommendMovies"
+                            style="width: 100%">
+                        <el-table-column type="expand">
+                            <template slot-scope="props">
+                                <el-form label-position="left" class="demo-table-expand">
+                                    <el-form-item label="电影名称">
+                                        <p>{{ props.row.movieName }}</p>
+                                    </el-form-item>
+                                    <el-form-item label="电影类别">
+                                        <p>{{ props.row.types }}</p>
+                                    </el-form-item>
+                                    <el-form-item label="导演">
+                                        <p>{{ props.row.director }}</p>
+                                    </el-form-item>
+                                    <el-form-item label="演员">
+                                        <p>{{ props.row.actors }}</p>
+                                    </el-form-item>
+                                    <el-form-item label="评分">
+                                        <el-rate v-model="props.row.rating"
+                                                 disabled
+                                                 show-score
+                                                 text-color="#ff9900"
+                                                 style="margin-top: 10px">
+                                        </el-rate>
+                                    </el-form-item>
+                                    <el-form-item label="描述">
+                                        <p>{{ props.row.description }}</p>
+                                        <el-form-item label="上映日期">
+                                            <p>{{ props.row.showDate }}</p>
+                                        </el-form-item>
+                                    </el-form-item>
+                                </el-form>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                                label="电影名称"
+                                prop="movieName">
+                        </el-table-column>
+                        <el-table-column
+                                label="电影类别"
+                                prop="types">
+                        </el-table-column>
+                        <el-table-column
+                                label="评分"
+                                prop="rating">
+                        </el-table-column>
+                    </el-table>
+                </template>
             </el-container>
         </el-main>
     </el-container>
@@ -99,16 +162,40 @@
                :visible="dialog.show"
                :before-close="closeDetailDialog">
         <img :src="dialog.movie.picture">
+        <p>电影名：{{dialog.movie.movieName}}</p>
+        <p>上映时间：{{dialog.movie.showDate}}</p>
+        <p>类型：{{dialog.movie.types}}</p>
+        <p>导演：{{dialog.movie.director}}</p>
+        <p>演员：{{dialog.movie.actors}}</p>
+        <p style="display: inline;float: left">评分：</p>
         <el-rate v-model="dialog.rating"
-                 @change="onRating"></el-rate>
-        <p>电影名{{dialog.movie.movieName}}</p>
-        <p>上映时间{{dialog.movie.showDate}}</p>
-        <p>类型{{dialog.movie.types}}</p>
-        <p>导演{{dialog.movie.director}}</p>
-        <p>演员{{dialog.movie.actors}}</p>
-        <p>简介{{dialog.movie.description}}</p>
+                 @change="onRating"
+                 show-score
+                 style="display: inline;float: left"></el-rate>
         <br><br>
-        相关电影{{dialog.relatedMovies}}
+        <p>简介：{{dialog.movie.description}}</p>
+        <br><br>
+        <!--相关电影-->
+        <el-row>
+            <el-col v-for="(item, index) in dialog.relatedMovies" :span="8">
+                <el-card :body-style="{ padding: '0px' }">
+                    <img :src="item.picture" class="image">
+                    <div style="padding: 14px;">
+                        <span>{{item.movieName}}</span>
+                        <div class="bottom clearfix">
+                            {{item.types}}
+                            <el-rate v-model="item.rating"
+                                     disabled
+                                     show-score
+                                     text-color="#ff9900">
+                            </el-rate>
+                            <el-button type="text" class="button" @click="handleImgClick(item)">查看详情
+                            </el-button>
+                        </div>
+                    </div>
+                </el-card>
+            </el-col>
+        </el-row>
     </el-dialog>
 </div>
 </body>
