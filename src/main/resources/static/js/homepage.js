@@ -12,6 +12,9 @@ let app = new Vue({
         movieList: []
     },
     methods: {
+        clickHeadIcon:function(){
+            window.open("./homepage.html", "_self")
+        },
         handleImgClick: function (item) {
             window.open("./searchDetail.html?" + item.movieName, "_self")
         },
