@@ -10,6 +10,111 @@
         .el-radio-button__orig-radio:checked + .el-radio-button__inner el-radio-button {
             background-color: black;
         }
+        aside::-webkit-scrollbar { width: 0 !important }
+        .el-main::-webkit-scrollbar { width: 0 !important}
+        div::-webkit-scrollbar-track {
+            -webkit-box-shadow:rgba(0,0,0,0.3);
+            border-radius:10px;
+        }
+        div::-webkit-scrollbar-thumb {
+            border-radius:10px;
+            background:rgba(255,0,0,0.4);
+            -webkit-box-shadow:rgba(0,0,0,0.5);
+        }
+        div::-webkit-scrollbar-thumb:window-inactive {
+            background:rgba(255,0,0,0.4);
+        }
+        .el-table{
+            /* 表格字体颜色 */
+            color:white;
+             border: none;
+            height: 500px;
+        }
+        /* 表格内背景颜色 */
+        .el-table th, .el-table tr,.el-table td{
+            border: 0;
+            background-color: transparent;
+        }
+        /* 双数行背景颜色 */
+        .el-table--striped .el-table__body tr.el-table__row--striped td {
+
+            background-color:#fff;
+            background-color: rgba(148, 144, 144, 0.3)
+        }
+        /* 使表格背景透明 */
+        .el-table th, .el-table tr {
+            background-color: transparent;
+        }
+        /* 删除表格下横线 */
+        .el-table::before {
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 0px;
+        }
+        /* 表格表头字体颜色 */
+        .el-table thead {
+            color: white;
+            font-weight: 500;
+            background-color:transparent;
+        }
+        .el-table, .el-table__expanded-cell{
+            background-color: transparent !important;
+        }
+        .demo-table-expand label{
+            color: white;
+        }
+        .el-table--enable-row-hover .el-table__body tr:hover>td{
+            background-color: red !important;
+        }
+
+        .el-radio__input.is-checked .el-radio__inner{
+            border-color: #bf0000;
+            background-color: red;
+        }
+        .el-radio__input.is-checked+.el-radio__label{
+            color: red;
+        }
+        .el-pager li.active{
+            color: red;
+        }
+        .el-pager li:hover{
+            color: red !important;
+        }
+        .el-pager li{
+            background-color: transparent !important;
+        }
+
+        .el-pagination button:disabled{
+            background-color: transparent !important;
+        }
+        .el-pagination button{
+            background-color: transparent !important;
+        }
+        .el-pagination button:hover{
+            color:red !important;
+        }
+        .el-radio-button__orig-radio:checked+.el-radio-button__inner{
+            background-color: red;
+            border-color: red;
+        }
+        .el-radio-button__inner{
+            background-color: transparent;
+            color: white;
+        }
+        .el-radio-button__inner:hover{
+
+            color: red;
+        }
+        .el-dialog__title{
+            color: white;
+        }
+        .el-card{
+            background-color: transparent;
+            color: white;
+            padding: 10px;
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -79,7 +184,7 @@
                     </div>
 
 
-                    <div style="margin-left: 5vw">
+                    <div style="margin-left: 5vw;">
                         <!--结果-->
                         <el-row v-for="row in movieArray">
                             <el-col v-for="(item, index) in row" :span="6">
@@ -88,7 +193,7 @@
                                                 background-color: black;border: none;
                                                 cursor: pointer"
                                          @click.native="openDetailDialog(item)">
-                                    <img :src="item.picture" class="image">
+                                    <img :src="item.picture" class="image" style="width: 247.7px;height: 371.6px">
                                     <div style="padding: 14px;">
                                         <span style="color:white;"> {{item.movieName}}</span>
                                         <div class="bottom clearfix" style="color: white">
@@ -119,9 +224,9 @@
                 </el-aside>
 
                 <!--推荐-->
-                <el-main>
+                <el-main >
                     <!--热门推荐-->
-                    <p style="color: white">热门推荐</p>
+                    <h1 style="color: white;text-align: center">热门排行</h1>
                     <template>
                         <el-table
                                 :data="topMovies"
@@ -169,7 +274,7 @@
                         </el-table>
                     </template>
                     <!--个性化推荐-->
-                    <p style="color: white">为您推荐</p>
+                    <h1 style="color: white;text-align: center;margin-top: 40px">为您推荐</h1>
                     <template>
                         <el-table
                                 :data="recommendMovies"
@@ -225,24 +330,32 @@
     <el-dialog :title="dialog.movie.movieName+' - 电影详情'"
                :visible="dialog.show"
                :before-close="closeDetailDialog">
-        <img :src="dialog.movie.picture">
-        <p>电影名：{{dialog.movie.movieName}}</p>
-        <p>上映时间：{{dialog.movie.showDate}}</p>
-        <p>类型：{{dialog.movie.types}}</p>
-        <p>导演：{{dialog.movie.director}}</p>
-        <p>演员：{{dialog.movie.actors}}</p>
-        <p style="display: inline;float: left">评分：</p>
-        <el-rate v-model="dialog.rating"
-                 @change="onRating"
-                 show-score
-                 style="display: inline;float: left"></el-rate>
-        <br><br>
-        <p>简介：{{dialog.movie.description}}</p>
-        <br><br>
+        <el-row>
+            <el-col :span="6">
+                <img :src="dialog.movie.picture">
+            </el-col>
+            <el-col :span="12" style="margin-left: 200px">
+                <p>电影名：{{dialog.movie.movieName}}</p>
+                <p>上映时间：{{dialog.movie.showDate}}</p>
+                <p>类型：{{dialog.movie.types}}</p>
+                <p>导演：{{dialog.movie.director}}</p>
+                <p>演员：{{dialog.movie.actors}}</p>
+                <p style="display: inline;float: left">评分：</p>
+                <el-rate v-model="dialog.rating"
+                         @change="onRating"
+                         show-score
+                         style="display: inline;float: left"></el-rate>
+                <br><br>
+                <p>简介：{{dialog.movie.description}}</p>
+                <br><br>
+            </el-col>
+        </el-row>
+
         <!--相关电影-->
         <div style="width: 100%;margin-top: 10px;margin-bottom: 30px;
 							white-space: nowrap;overflow-x: auto;-webkit-overflow-scrolling:touch;">
-            <el-card :body-style="{ padding: '0px' }"
+            <h1 style="color: white">喜欢这部电影的人同时也喜欢这些电影~</h1>
+            <el-card :body-style="{ padding: '10px' }"
                      v-for="(item, index) in dialog.relatedMovies">
                 <img :src="item.picture" class="image">
                 <div style="padding: 14px;">
@@ -252,7 +365,7 @@
                         <el-rate v-model="item.rating"
                                  disabled
                                  show-score
-                                 text-color="#ff9900">
+                                 text-color="#ff9900" style="margin-top: 20px">
                         </el-rate>
                         <el-button type="text" class="button" @click="handleImgClick(item)">搜索
                         </el-button>
