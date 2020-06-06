@@ -6,12 +6,17 @@
     <script src="../utils/templateJS.js"></script>
     <link rel="stylesheet" href="../utils/templateCSS.css">
     <link rel="stylesheet" href="../css/searchDetail.css">
+    <style>
+        .el-radio-button__orig-radio:checked+.el-radio-button__inner el-radio-button{
+            background-color: black;
+        }
+    </style>
 </head>
 <body>
 <div id="app" v-cloak>
     <el-container>
         <el-header
-                style="height:46px;background: #007cc4;box-shadow: 0 2px 10px 0 rgba(0,0,0,.15);display: inline;float: left;">
+                style="height:46px;background: #000000;box-shadow: 0 2px 10px 0 rgba(0,0,0,.15);display: inline;float: left;">
             <el-image src="http://n1.itc.cn/img8/wb/recom/2016/08/05/147036120033393725.JPEG"
                       @click.native="clickHeadIcon()"
                       id="HeadIcon"
@@ -26,7 +31,7 @@
                 <el-button type="danger" size="small" @click="logout">退出</el-button>
             </div>
         </el-header>
-        <el-main v-if="page.show">
+        <el-main v-if="page.show" style="background-color: black">
             <el-container>
                 <!--结果-->
                 <el-aside width="60vw">
@@ -72,17 +77,18 @@
 
                     <!--结果-->
                     <el-row v-for="row in movieArray">
-                        <el-col v-for="(item, index) in row" :span="8">
-                            <el-card :body-style="{ padding: '0px' }">
+                        <el-col v-for="(item, index) in row" :span="6">
+                            <el-card :body-style="{ padding: '5px' }" style="padding: 20px 50px 0 0;margin:20px 0 0 0 ;background-color: black;border: none">
                                 <img :src="item.picture" class="image">
                                 <div style="padding: 14px;">
-                                    <span>{{item.movieName}}</span>
-                                    <div class="bottom clearfix">
+                                    <span style="color:white;"> {{item.movieName}}</span>
+                                    <div class="bottom clearfix" style="color: white">
                                         {{item.types}}
                                         <el-rate v-model="item.rating"
                                                  disabled
                                                  show-score
-                                                 text-color="#ff9900">
+                                                 text-color="#ff9900"
+                                        style="margin-top: 10px">
                                         </el-rate>
                                         <el-button type="text" class="button" @click="openDetailDialog(item)">查看详情
                                         </el-button>

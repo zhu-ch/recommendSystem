@@ -9,7 +9,9 @@ let app = new Vue({
             show: false
         },
         searchMovieName: '',
-        movieList: []
+        movieList: [],
+        screenWidth: document.body.clientWidth,
+        fits:'fill'
     },
     methods: {
         clickHeadIcon:function(){
@@ -69,5 +71,14 @@ let app = new Vue({
         setTimeout(function () {
             window.open("./welcome.html", '_self')
         }, 2000);
+    },
+    mounted () {
+        const that = this
+        window.onresize = () => {
+            return (() => {
+                window.screenWidth = document.body.clientWidth
+                that.screenWidth = window.screenWidth
+            })()
+        }
     }
 })

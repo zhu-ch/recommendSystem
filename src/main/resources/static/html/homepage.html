@@ -6,12 +6,15 @@
     <script src="../utils/templateJS.js"></script>
     <link rel="stylesheet" href="../utils/templateCSS.css">
     <link rel="stylesheet" href="../css/homepage.css">
+    <style>
+
+    </style>
 </head>
 <body>
 <div id="app" v-cloak>
     <el-container>
         <el-header
-                style="height:46px;background: #007cc4;box-shadow: 0 2px 10px 0 rgba(0,0,0,.15);display: inline;float: left;">
+                style="height:46px;background: black;display: inline;float: left;">
             <el-image src="http://n1.itc.cn/img8/wb/recom/2016/08/05/147036120033393725.JPEG"
                       @click.native="clickHeadIcon()"
                       id="HeadIcon"
@@ -26,30 +29,42 @@
                 <el-button type="danger" size="small" @click="logout">退出</el-button>
             </div>
         </el-header>
-        <el-main v-if="page.show" style="padding: 10px">
-            <el-carousel height="41em"
-                         style="background-color: #8c939d;"
+        <el-main v-if="page.show" style="padding: 10px;background-color: black;width: 100%">
+            <el-carousel height="55em"
+                         style="background-color: black;"
                          indicator-position="none">
                 <el-carousel-item
                         v-for="(item,index) in movieList"
                         :key="index">
-                    <el-image :src="item.picture" style="height: 60%;margin-left: 30%"
-                              @click.native="handleImgClick(item)"></el-image>
-                    <div style="background-color: #8c939d;height: 40%;padding-left: 10px;padding-right: 10px">
-                        <h1>{{item.movieName}}</h1>
-                        <el-rate v-model="item.rating"
-                                 disabled
-                                 show-score
-                                 text-color="#ff9900"
-                                 style="position: relative;left: 45em;">
-                        </el-rate>
-                        <h3 style="margin-top: -10px">Director</h3>
-                        <p>{{item.director}}</p>
-                        <h3>Actors</h3>
-                        <p>{{item.actors}}</p>
-                        <h3>Description</h3>
-                        <p>{{item.description}}</p>
-                    </div>
+                    <el-row>
+                        <el-col :span="12">
+                            <el-image :src="item.picture" style="height: 100%"
+                                      :fit="fit"
+                                      @click.native="handleImgClick(item)"></el-image>
+                        </el-col>
+                        <el-col :span="8">
+                            <div style="background-color: black;height: 40%;padding-left: 10px;padding-right: 10px;margin-top: 220px">
+                                <h1>{{item.movieName}}</h1>
+                                <el-rate v-model="item.rating"
+                                         disabled
+                                         show-score
+                                         text-color="#ff9900"
+                                         style="position: relative;">
+                                </el-rate>
+
+                                <h3 style="margin-top: 20px">Director</h3>
+                                <p>{{item.director}}</p>
+                                <p></p>
+                                <h3 style="margin-top: 20px">Actors</h3>
+                                <p>{{item.actors}}</p>
+                                <p></p>
+                                <h3 style="margin-top: 20px">Description</h3>
+                                <p>{{item.description}}</p>
+                            </div>
+                        </el-col>
+                    </el-row>
+
+
                 </el-carousel-item>
             </el-carousel>
         </el-main>

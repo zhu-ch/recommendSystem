@@ -9,15 +9,15 @@ img{
     margin-left: 20%;
     background-color: #FFFFFF;
     width: 60%;
-    color: #000000;
+    color: white;
 }
 .el-carousel h1{
-    color: blue;
+    color: white;
     display: inline;
     /*float: left;*/
 }
 .el-carousel h3{
-    color: #007cc4;
+    color: white;
     left: 0;
     display: block;
     /*display: inline;*/
