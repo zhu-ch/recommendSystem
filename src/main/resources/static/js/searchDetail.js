@@ -4,7 +4,8 @@ let app = new Vue({
         urls: {
             getMoviesByName: 'http://localhost:8666/api/movie/getMoviesByName',
             getRecommendMovies: 'http://localhost:8666/api/movie/getRecommendMovies',
-            getRelatedMovies: 'http://localhost:8666/api/movie/getRelatedMovies'
+            getRelatedMovies: 'http://localhost:8666/api/movie/getRelatedMovies',
+            getRecentTopMovies: 'http://localhost:8666/api/movie/getRecentTopMovies'
             //todo wh:打分URL
         },
         page: {
@@ -19,7 +20,7 @@ let app = new Vue({
             props: {
                 searchKey: '',
                 pageIndex: 1,
-                pageSize: 9,
+                pageSize: 12,
                 total: 0
             }
         },
@@ -29,10 +30,11 @@ let app = new Vue({
             rating: 0,
             relatedMovies: []
         },
-        recommendMovies: []
+        recommendMovies: [],
+        topMovies: []
     },
     methods: {
-        clickHeadIcon:function(){
+        clickHeadIcon: function () {
             window.open("./homepage.html", "_self")
         },
         handleImgClick: function (item) {
@@ -53,12 +55,12 @@ let app = new Vue({
             }, 2000);
         },
         onPageIndexChange: function (newIndex) {
-            this.table.searchResult = [];
             this.table.props.pageIndex = newIndex;
             this.getSearchResult();
         },
         getSearchResult: function () {
             let app = this;
+            this.table.searchResult = [];
             let data = {
                 page: app.table.props,
                 movieName: app.table.props.searchKey,
@@ -141,7 +143,7 @@ let app = new Vue({
             this.table.props.searchKey = decodeURI(window.location).split('?')[1];
             this.getSearchResult();
 
-            //获取推荐结果
+            //获取个性化推荐结果
             ajaxPost(
                 app.urls.getRecommendMovies,
                 {userName: userName},
@@ -158,7 +160,31 @@ let app = new Vue({
                 },
                 function () {
                     app.$message({
-                        message: '获取推荐结果失败',
+                        message: '获取个性化推荐结果失败',
+                        type: 'error'
+                    });
+                }
+            )
+
+            //获取热门电影推荐
+            ajaxPostJSON(
+                this.urls.getRecentTopMovies,
+                null,
+                function (result) {
+                    if (result.code === 'success') {
+                        console.log(result.data.resultList)
+                        result.data.resultList.forEach(function (r) {
+                            app.topMovies.push(r)
+                        })
+                    } else
+                        app.$message({
+                            message: '服务器错误，原因\n' + result.data,
+                            type: 'error'
+                        });
+                },
+                function () {
+                    app.$message({
+                        message: '获取热门电影推荐失败',
                         type: 'error'
                     });
                 }
@@ -180,9 +206,9 @@ let app = new Vue({
             let ret = [[], [], []];
             let movies = this.table.searchResult;
             for (let i = 0; i < movies.length; i++) {
-                if (i <= 2)
+                if (i <= 3)
                     ret[0].push(movies[i]);
-                else if (i <= 5)
+                else if (i <= 7)
                     ret[1].push(movies[i]);
                 else
                     ret[2].push(movies[i]);

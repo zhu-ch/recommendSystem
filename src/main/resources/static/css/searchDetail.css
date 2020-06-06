@@ -27,21 +27,30 @@
 .clearfix:after {
     clear: both
 }
+
 .demo-table-expand {
     font-size: 0;
 }
+
 .demo-table-expand label {
     width: 90px;
     color: black;
 }
+
 .demo-table-expand .el-form-item {
     margin-right: 0;
     margin-bottom: 0;
     /*width: 50%;*/
 }
-.el-dialog{
+
+.el-dialog {
     background-color: #333333;
 }
-.el-dialog p{
+
+.el-dialog p {
     color: #FFFFFF;
+}
+
+.el-card {
+    display: inline-block;
 }

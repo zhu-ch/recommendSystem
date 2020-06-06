@@ -14,4 +14,5 @@ public class MovieEntity extends DataEntity<MovieEntity> {
     float rating;
     String description;
     String types;
+    String bigPicture;
 }

@@ -68,6 +68,19 @@ public class MovieController extends BaseApi {
         }
     }
 
+    @RequestMapping(value = "getRecentTopMovies", method = RequestMethod.POST)
+    @ResponseBody
+    public Object getRecentTopMovies() {
+        try {
+            Page<MovieEntity> page = new Page<>();
+            page.setResultList(movieService.getRecentTopMovies());
+            return retMsg.Set(MsgType.SUCCESS, page);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return retMsg.Set(MsgType.ERROR, e.toString());
+        }
+    }
+
     @Deprecated
     @RequestMapping(value = "getMovieDetails", method = RequestMethod.POST)
     @ResponseBody

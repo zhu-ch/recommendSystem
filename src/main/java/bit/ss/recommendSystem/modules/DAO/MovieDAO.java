@@ -17,5 +17,7 @@ public interface MovieDAO {
 
     List<MovieEntity> getRelatedMovies(MovieEntity movie);
 
+    List<MovieEntity> getRecentTopMovies();
+
     MovieEntity getMovieById(int id);
 }

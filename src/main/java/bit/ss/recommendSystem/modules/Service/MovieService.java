@@ -46,4 +46,8 @@ public class MovieService {
     public List<MovieEntity> getRelatedMovies(MovieEntity movie) {
         return movieDAO.getRelatedMovies(movie);
     }
+
+    public List<MovieEntity> getRecentTopMovies() {
+        return movieDAO.getRecentTopMovies();
+    }
 }

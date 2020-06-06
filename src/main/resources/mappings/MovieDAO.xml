@@ -11,6 +11,7 @@
         <result column="averating" jdbcType="DOUBLE" property="rating" />
         <result column="description" jdbcType="VARCHAR" property="description" />
         <result column="typelist" jdbcType="VARCHAR" property="types" />
+        <result column="backpost" jdbcType="VARCHAR" property="bigPicture" />
     </resultMap>
     <select id="getDefaultMovie" resultMap="BaseResultMap">
         select * from movie_info where movieid in
@@ -50,6 +51,13 @@
         select * from movie_info where movieid in
         (select t.`itemid2` from
             (select `itemid2` from recommend_for_movie where itemid1=#{id} order by `similar` desc limit 5)
+         as t
+        )
+    </select>
+    <select id="getRecentTopMovies" resultMap="BaseResultMap">
+        select * from movie_info where movieid in
+        (select t.movieid from
+            (select `movieid` from top_count_movies limit 10)
          as t
         )
     </select>
